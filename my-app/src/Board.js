@@ -1,21 +1,24 @@
-import React, {useReducer} from 'react';
+import React, { useReducer } from 'react';
 import logo from './logo.svg';
 import Square from './Square';
-import {BoardSquareContext, BoardSetSquareContext, SquareContext} from './App.js';
+import {
+  BoardSquareContext,
+  BoardSetSquareContext,
+  SquareContext,
+} from './App.js';
 
 // main board component
 function Board() {
-
   const boardSquares = React.useContext(BoardSquareContext);
   const setBoardSquares = React.useContext(BoardSetSquareContext);
 
-  const initialSate = 'true'
+  const initialSate = 'true';
   const reducer = (state, action) => {
-    switch(action) {
-      case 'setXPlayer' :
-         return (!state)
+    switch (action) {
+      case 'setXPlayer':
+        return !state;
     }
-  }
+  };
   const [isXPlayer, dispatch] = useReducer(reducer, initialSate);
 
   // fucntion for when a sqaure is clicked
@@ -34,14 +37,6 @@ function Board() {
     dispatch('setXPlayer');
   };
 
-  // rendering the squares using square component
-  const renderSquare = index => {
-    return (
-      <Square id={index} value={boardSquares[index]} onClick={() => whenClicked(index)} />
-    );
-  };
-
-  // create the gameStatus to determine next player and winner
   let gameStatus;
   const winner = findWinner(boardSquares);
   gameStatus = winner
@@ -52,26 +47,20 @@ function Board() {
     <div className="board">
       <h2 className={gameStatus}>{gameStatus}</h2>
       <div className="boardRow">
-        {renderSquare(0)}
-        {renderSquare(1)}
-        {renderSquare(2)}
-      </div>
-      <div className="boardRow">
-        {renderSquare(3)}
-        {renderSquare(4)}
-        {renderSquare(5)}
-      </div>
-      <div className="boardRow">
-        {renderSquare(6)}
-        {renderSquare(7)}
-        {renderSquare(8)}
+        {boardSquares.map((square, index) => (
+          <Square
+            id={index}
+            value={boardSquares[index]}
+            onClick={() => whenClicked(index)}
+          />
+        ))}
       </div>
     </div>
-  )
+  );
 }
 
 // function to determine winner
-const findWinner = (squares) => {
+const findWinner = squares => {
   // winning combinations
 
   const winningCombos = [
@@ -94,7 +83,6 @@ const findWinner = (squares) => {
   }
   // else return null
   return null;
-}
-
+};
 
 export default Board;

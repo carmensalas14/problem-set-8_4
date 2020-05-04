@@ -25,10 +25,8 @@
 }
 
 .boardRow{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
+  display: grid;
+  grid-template-columns:  repeat(3, 200px);
+  grid-template-rows: repeat(3, 200px);
   justify-content: center;
-
-};
+}
